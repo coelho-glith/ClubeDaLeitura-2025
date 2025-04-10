@@ -1,4 +1,6 @@
-﻿namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
+﻿using ClubeDaLeitura_2025.ConsoleApp.Compartilhado;
+
+namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
 
 public class TelaAmigo
 {
@@ -41,7 +43,31 @@ public class TelaAmigo
 
     public void InserirAmigo()
     {
+        ExibirCabecalho();
 
+        Console.WriteLine();
+
+        Console.WriteLine("Inserindo Amigo...");
+        Console.WriteLine("--------------------------------------------");
+
+        Console.WriteLine();
+
+        Amigo novoAmigo = ObterDadosAmigo();
+
+        string erros = novoAmigo.Validar();
+
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+            InserirAmigo();
+
+            return;
+        }
+
+        repositorioAmigo.InserirAmigo(novoAmigo);
+
+        Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
 
 
 
@@ -67,4 +93,19 @@ public class TelaAmigo
 
     }
 
+    public Amigo ObterDadosAmigo()
+    {
+        Console.Write("Digite o nome do fabricante: ");
+        string nome = Console.ReadLine();
+
+        Console.Write("Digite o Nome do Responsável: ");
+        string responsavel = Console.ReadLine();
+
+        Console.Write("Digite o telefone: ");
+        string telefone = Console.ReadLine();
+
+        Amigo amigo = new Amigo(nome, responsavel, telefone);
+
+        return amigo;
+    }
 }

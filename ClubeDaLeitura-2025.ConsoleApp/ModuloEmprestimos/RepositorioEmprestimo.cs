@@ -2,7 +2,7 @@
 
 public class RepositorioEmprestimo
 {
-    public Emprestimo[] emprestimos = new Emprestimo[100];
+    public Emprestimo[] emprestimos = new Emprestimo[10];
     public int contadorEmprestimos = 0;
 
     public void Inserir()

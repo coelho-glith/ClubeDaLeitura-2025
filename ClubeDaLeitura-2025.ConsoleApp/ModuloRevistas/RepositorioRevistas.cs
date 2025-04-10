@@ -2,7 +2,7 @@
 
 public class RepositorioRevistas
 {
-    public Revista[] revistas = new Revista[100];
+    public Revista[] revistas = new Revista[10];
     public int contadorRevistas = 0;
 
     public void Inserir()

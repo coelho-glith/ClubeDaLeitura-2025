@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-
-namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
+﻿namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
 
 public class Amigo
 {

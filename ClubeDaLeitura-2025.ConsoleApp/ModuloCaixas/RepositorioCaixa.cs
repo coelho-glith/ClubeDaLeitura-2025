@@ -2,7 +2,7 @@
 
 public class RepositorioCaixa
 {
-    public Caixa[] caixas = new Caixa[100];
+    public Caixa[] caixas = new Caixa[10];
     public int contadorCaixas = 0;
 
     public void Inserir()
