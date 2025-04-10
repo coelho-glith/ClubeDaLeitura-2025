@@ -5,8 +5,11 @@ public class RepositorioAmigos
     public Amigo[] amigos = new Amigo[100];
     public int contadorAmigos = 0;
 
-    public void Inserir()
+    public void InserirAmigo(Amigo novoAmigo)
     {
+        novoAmigo.Id = 
+
+
 
     }
 
