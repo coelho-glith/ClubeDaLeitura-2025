@@ -1,0 +1,1 @@
+# ClubeDaLeitura-2025.ConsoleApp
