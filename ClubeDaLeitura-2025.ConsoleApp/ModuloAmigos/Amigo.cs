@@ -1,10 +1,13 @@
-﻿namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
+﻿using ClubeDaLeitura_2025.ConsoleApp.ModuloEmprestimos;
+
+namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
 
 public class Amigo
 {
     public int Id;
     public string Nome;
     public string Responsavel;
+    public Emprestimo[] Emprestimos;
     public string Telefone;
 
     public Amigo (string nome, string responsavel, string telefone)
@@ -40,8 +43,8 @@ public class Amigo
     }
 
 
-    public void ObterEmprestimos()
+    public Emprestimo[] ObterEmprestimos()
     {
-
+        return Emprestimos;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura_2025.ConsoleApp.Compartilhado;
+using ClubeDaLeitura_2025.ConsoleApp.ModuloEmprestimos;
 
 namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
 
@@ -6,6 +7,7 @@ public class RepositorioAmigos
 {
     public Amigo[] amigos = new Amigo[10];
     public int contadorAmigos = 0;
+    public bool ListaSemNada = false;
 
     public void InserirAmigo(Amigo novoAmigo)
     {
@@ -15,24 +17,86 @@ public class RepositorioAmigos
 
     }
 
-    public void Editar()
+    public bool EditarAmigo(int idAmigo, Amigo amigoEditado)
     {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (amigos[i] == null)
+                continue;
 
+            else if (amigos[i].Id == idAmigo)
+            {
+                amigos[i].Nome = amigoEditado.Nome;
+                amigos[i].Responsavel = amigoEditado.Responsavel;
+                amigos[i].Telefone = amigoEditado.Telefone;
+
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void Excluir()
+    public bool VerificarNovoAmigo(Amigo novoAmigo)
     {
-
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (novoAmigo.Nome == amigos[i].Nome && novoAmigo.Telefone == amigos[i].Telefone)
+                return true;
+        }
+        return false;
     }
 
-    public void SelecionarTodos()
+    public bool ExcluirAmigo(Amigo amigoEncontrado)
     {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            if (amigos[i] == null)
+                continue;
 
+            else if (amigos[i].Id == amigoEncontrado.Id)
+            {
+                amigos[i] = null;
+                return true;
+
+            }
+        }
+        return false;
     }
 
-    public void SelecionarPorId()
+    public Amigo[] SelecionarAmigos()
     {
-
+        return amigos;
     }
 
+    public Amigo SelecionarPorId(int idAmigo)
+    {
+        for (int i = 0; i < amigos.Length; i++)
+        {
+            Amigo e = amigos[i];
+
+            if (e == null)
+                continue;
+
+            else if (e.Id == idAmigo)
+                return e;
+        }
+
+        return null;
+    }
+
+    public bool VerificarEmprestimosAmigo(Amigo amigoEncontrado)
+    {
+        int emprestimos = 0;
+
+        foreach (Emprestimo e in amigoEncontrado.Emprestimos)
+        {
+            if (e != null)
+                emprestimos++;
+        }
+
+        if (emprestimos > 0)
+            return true;
+        else
+            return false;
+    }
 }
