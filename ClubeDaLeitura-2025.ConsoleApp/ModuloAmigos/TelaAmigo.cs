@@ -27,8 +27,8 @@ public class TelaAmigo
         Console.WriteLine("1 - Inserir Amigo");
         Console.WriteLine("2 - Editar Amigo");
         Console.WriteLine("3 - Excluir Amigo");
-        Console.WriteLine("4 - Visualizar Amigos");
-        Console.WriteLine("4 - Visualizar Empréstimos do amigo");
+        Console.WriteLine("4 - Visualizar Amigos Inseridos");
+        Console.WriteLine("5 - Visualizar Empréstimos do amigo");
 
         Console.WriteLine("S - Voltar");
 
@@ -108,11 +108,11 @@ public class TelaAmigo
             return;
         }
 
-        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+        Notificador.ExibirMensagem("O registro foi editado com sucesso", ConsoleColor.Green);
     }
     
 
-    public void Excluir()
+    public void RemoverAmigo()
     {
         ExibirCabecalho();
 
@@ -142,7 +142,7 @@ public class TelaAmigo
         repositorioAmigos.ExcluirAmigo(amigoEncontrado);
 
         Console.WriteLine();
-        Console.WriteLine("Amigo excluído com sucesso");
+        Console.WriteLine("Amigo excluído.");
 
     }
 
@@ -232,8 +232,8 @@ public class TelaAmigo
 
             if (!idValido)
             {
-                Console.WriteLine("\nO ID selecionado é inválido!");
-                Console.Write("\nPressione [Enter] para tentar novamente!");
+                Console.WriteLine("\nO ID selecionado é inválido");
+                Console.Write("\nPressione qualquer tecla para tentar novamente!");
                 Console.ReadKey();
                 VisualizarEmprestimos(true, false);
                 return;
@@ -251,10 +251,10 @@ public class TelaAmigo
         if (exibirCabecalho)
             ExibirCabecalho();
 
-        Console.WriteLine();
-        Console.WriteLine($"Visualizando Emprestimos de {amigoEncontrado.Nome}...");
+        
+        Console.WriteLine($"\nVisualizando Emprestimos de {amigoEncontrado.Nome}...\n");
         Console.WriteLine("--------------------------------------------");
-        Console.WriteLine();
+        
 
         if (amigoComId)
             Console.WriteLine(
@@ -281,6 +281,7 @@ public class TelaAmigo
                     e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
 
         }
+    }
 
     public Amigo ObterDadosAmigo()
     {
