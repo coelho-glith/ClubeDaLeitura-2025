@@ -4,6 +4,7 @@ public class RepositorioEmprestimo
 {
     public Emprestimo[] emprestimos = new Emprestimo[10];
     public int contadorEmprestimos = 0;
+    public bool ListaSemNada = false;
 
     public void Inserir()
     {

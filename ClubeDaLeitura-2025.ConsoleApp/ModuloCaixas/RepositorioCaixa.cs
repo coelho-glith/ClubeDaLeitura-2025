@@ -1,18 +1,28 @@
-﻿namespace ClubeDaLeitura_2025.ConsoleApp.ModuloCaixas;
+﻿using ClubeDaLeitura_2025.ConsoleApp.Compartilhado;
+
+namespace ClubeDaLeitura_2025.ConsoleApp.ModuloCaixas;
 
 public class RepositorioCaixa
 {
     public Caixa[] caixas = new Caixa[10];
     public int contadorCaixas = 0;
+    public bool ListaSemNada = false;
 
-    public void Inserir()
+    public void InserirCaixa(Caixa novaCaixa)
     {
-        
+        novaCaixa.id = GeradorIds.GerarIdCaixa();
+
+        caixas[contadorCaixas++] = novaCaixa;
     }
 
-    public void Editar()
+    public Caixa[] BuscarListaRegistrados()
     {
-     
+        return caixas;
+    }
+
+    public void EditarCaixa(Caixa caixaEncontrada, Caixa caixaDadosEditados)
+    {
+
     }
 
     public void Excluir()
@@ -25,10 +35,17 @@ public class RepositorioCaixa
 
     }
 
-    public void SelecionarPorId()
+    public Caixa SelecionarPorId(int idCaixaEncontrada)
     {
+        foreach (Caixa c in caixas)
+        {
+            if (c == null)
+                continue;
 
+            if (c.id == idCaixaEncontrada)
+                return c;
+        }
+
+        return null!;
     }
-
-    
 }

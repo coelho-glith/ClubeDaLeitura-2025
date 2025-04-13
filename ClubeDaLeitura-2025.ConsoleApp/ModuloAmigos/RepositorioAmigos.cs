@@ -5,7 +5,7 @@ namespace ClubeDaLeitura_2025.ConsoleApp.ModuloAmigos;
 
 public class RepositorioAmigos
 {
-    public Amigo[] amigos = new Amigo[10];
+    public Amigo[] amigos = new Amigo[40];
     public int contadorAmigos = 0;
     public bool ListaSemNada = false;
 
@@ -24,14 +24,13 @@ public class RepositorioAmigos
             if (amigos[i] == null)
                 continue;
 
-            else if (amigos[i].Id == idAmigo)
-            {
+           
                 amigos[i].Nome = amigoEditado.Nome;
                 amigos[i].Responsavel = amigoEditado.Responsavel;
                 amigos[i].Telefone = amigoEditado.Telefone;
 
                 return true;
-            }
+            
         }
         return false;
     }

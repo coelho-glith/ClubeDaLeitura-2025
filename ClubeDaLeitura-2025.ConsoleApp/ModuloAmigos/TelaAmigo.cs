@@ -8,8 +8,6 @@ public class TelaAmigo
 
     public RepositorioAmigos repositorioAmigos;
 
-
-
     public void ExibirCabecalho()
     {
         Console.Clear();
@@ -83,7 +81,7 @@ public class TelaAmigo
 
     }
 
-    public void Editar()
+    public void EditarAmigo()
     {
         ExibirCabecalho();
 
@@ -92,7 +90,7 @@ public class TelaAmigo
 
         Console.WriteLine();
 
-        VisualizarAmigos(false);
+        VisualizarAmigos(false,true);
 
         Console.Write("Digite o ID do registro que deseja selecionar: ");
         int idAmigo = Convert.ToInt32(Console.ReadLine());
@@ -137,14 +135,14 @@ public class TelaAmigo
 
         if (repositorioAmigos.VerificarEmprestimosAmigo(amigoEncontrado))
         {
-            Console.WriteLine($"O {amigoEncontrado.Nome} ainda tem emprestimos em aberto!");
+            Console.WriteLine($"O {amigoEncontrado.Nome} ainda tem emprestimos em aberto");
             return;
         }
 
         repositorioAmigos.ExcluirAmigo(amigoEncontrado);
 
         Console.WriteLine();
-        Console.WriteLine("Amigo excluído com sucesso!");
+        Console.WriteLine("Amigo excluído com sucesso");
 
     }
 
@@ -223,6 +221,25 @@ public class TelaAmigo
         if (repositorioAmigos.ListaSemNada)
             return;
 
+        bool idValido;
+        int idAmigoEscolhido;
+
+        do
+        {
+            Console.WriteLine("\n--------------------------------------------");
+            Console.Write("Selecione o ID de um Amigo: ");
+            idValido = int.TryParse(Console.ReadLine(), out idAmigoEscolhido);
+
+            if (!idValido)
+            {
+                Console.WriteLine("\nO ID selecionado é inválido!");
+                Console.Write("\nPressione [Enter] para tentar novamente!");
+                Console.ReadKey();
+                VisualizarEmprestimos(true, false);
+                return;
+            }
+        } while (!idValido);
+
         Console.WriteLine("\n--------------------------------------------");
         Console.Write("Selecione o ID de um Amigo: ");
         int idAmigo = Convert.ToInt32(Console.ReadLine());
@@ -248,7 +265,22 @@ public class TelaAmigo
                 "{0, -20} | {1, -35} |",
                 "Status", "Revista Emprestada");
 
-    }
+
+        foreach (Emprestimo e in emprestimosAmigoEncontrado)
+        {
+            if (e == null)
+                continue;
+
+            if (amigoComId)
+                Console.WriteLine(
+                    "{0, -6} | {2, -35} | {3, -20} | {4, -20}",
+                    e.id, e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
+            else
+                Console.WriteLine(
+                    "{0, -20} | {1, -20} | {2, -20}",
+                    e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
+
+        }
 
     public Amigo ObterDadosAmigo()
     {
