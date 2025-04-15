@@ -22,9 +22,9 @@ public class TelaEmprestimo
         ExibirCabecalho();
 
         Console.WriteLine("1 - Registrar Empréstimo");
-        Console.WriteLine("2 - Visualizar Lista de Empréstimos");
+        Console.WriteLine("2 - Editar Empréstimo");
         Console.WriteLine("3 - Excluir Empréstimo");
-        Console.WriteLine("4 - Editar Empréstimo");
+        Console.WriteLine("4 - Visualizar Lista de Empréstimos");
         Console.WriteLine("5 - Registrar Devolução");
         Console.WriteLine("S - Voltar");
         
@@ -74,9 +74,9 @@ public class TelaEmprestimo
         Console.WriteLine("\nEmpréstimo registrado com sucesso");
     }
 
-    private Emprestimo ObterDadosEmprestimo()
+    public Emprestimo ObterDadosEmprestimo()
     {
-        VisualizarAmigos(true, true);
+        VisualizarAmigos(true);
 
         if (RepositorioAmigos.ListaSemNada)
             return null!;
@@ -108,7 +108,7 @@ public class TelaEmprestimo
             return null!;
         }
 
-        VisualizarRevistas(true, true);
+        VisualizarRevistas(true);
 
         if (RepositorioRevistas.ListaSemNada)
             return null!;
@@ -149,7 +149,7 @@ public class TelaEmprestimo
         Console.WriteLine("Editando Empréstimo...");
         Console.WriteLine("--------------------------------------------");
 
-        BuscarListaCadastrados(false, true);
+        BuscarListaEmprestimo(true);
 
         if (RepositorioEmprestimo.ListaSemNada)
             return;
@@ -208,7 +208,7 @@ public class TelaEmprestimo
         Console.WriteLine("\nEmpréstimo editado com sucesso", ConsoleColor.Green);
     }
 
-    private void BuscarListaCadastrados(bool exibirCabecalho, bool emprestimoComId)
+    public void BuscarListaEmprestimo(bool exibirCabecalho)
     {
         if (exibirCabecalho)
             ExibirCabecalho();
@@ -216,14 +216,10 @@ public class TelaEmprestimo
         Console.WriteLine("Visualizando Empréstimos...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (emprestimoComId)
-            Console.WriteLine(
-                "{0, -6} | {1, -20} | {2, -35} | {3, -20} | {4, -20}",
-                "Id", "Amigo", "Revista", "Data de Devolução", "Situação");
-        else
-            Console.WriteLine(
-                "{0, -20} | {1, -35} | {2, -20} | {3, -20}",
-                "Amigo", "Revista", "Data de Devolução", "Situação");
+        Console.WriteLine(
+        "{0,-6} | {1,-20} | {2,-35} | {3,-20} | {4,-20}",
+        "Id", "Amigo", "Revista", "Data de Devolução", "Situação");
+
 
         Emprestimo[] emprestimosEncontrados = RepositorioEmprestimo.BuscarListaEmprestimo();
 
@@ -241,19 +237,14 @@ public class TelaEmprestimo
             quantidadeEmprestimos++;
             RepositorioEmprestimo.ListaSemNada = false;
 
-            if (emprestimoComId)
-                Console.WriteLine(
-                    "{0, -6} | {1, -20} | {2, -35} | {3, -20} | {4, -20}",
-                    e.id, e.Amigo.Nome, e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
-            else
-                Console.WriteLine(
-                    "{0, -20} | {1, -35} | {2, -20} | {3, -20}",
-                    e.Amigo.Nome, e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
+            Console.WriteLine(
+            "{0,-6} | {1,-20} | {2,-35} | {3,-20} | {4,-20}",
+            e.id, e.Amigo.Nome, e.Revista.Nome, e.ObterDataDevolucao().ToShortDateString(), e.Situacao);
         }
 
         if (quantidadeEmprestimos == 0)
         {
-            Console.WriteLine("\nNenhum empréstimo registrado!");
+            Console.WriteLine("\nNenhum empréstimo registrado");
             RepositorioEmprestimo.ListaSemNada = true;
         }
     }
@@ -268,7 +259,7 @@ public class TelaEmprestimo
         Console.WriteLine("Excluindo Empréstimo...");
         Console.WriteLine("--------------------------------------------");
 
-        BuscarListaCadastrados(false, true);
+        BuscarListaEmprestimo(true);
 
         if (RepositorioEmprestimo.ListaSemNada)
             return;
@@ -305,7 +296,7 @@ public class TelaEmprestimo
         Console.WriteLine("\nEmpréstimo excluído com sucesso");
     }
 
-    public void VisualizarRevistas(bool exibirCabecalho, bool emprestimoComId)
+    public void VisualizarRevistas(bool exibirCabecalho)
     {
         int quantidadeRevistas = 0;
 
@@ -315,14 +306,9 @@ public class TelaEmprestimo
         Console.WriteLine("Visualizando Revistas...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (emprestimoComId)
-            Console.WriteLine(
-                "{0, -6} | {1, -30} | {2, -15} | {3, -20} | {4, -20} | {5, -20}",
-                "Id", "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
-        else
-            Console.WriteLine(
-                "{0, -30} | {1, -15} | {2, -20} | {3, -20} | {4, -20}",
-                "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
+        Console.WriteLine(
+        "{0,-6} | {1,-30} | {2,-15} | {3,-20} | {4,-20} | {5,-20}",
+        "Id", "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
 
         Revista[] revistasEncontradas = RepositorioRevistas.BuscarListaRevistas();
 
@@ -336,14 +322,9 @@ public class TelaEmprestimo
             quantidadeRevistas++;
             RepositorioRevistas.ListaSemNada = false;
 
-            if (emprestimoComId)
-                Console.WriteLine(
-                    "{0, -6} | {1, -30} | {2, -15} | {3, -20} | {4, -20} | {5, -20}",
-                    r.id, r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
-            else
-                Console.WriteLine(
-                    "{0, -30} | {1, -15} | {2, -20} | {3, -20} | {4, -20}",
-                    r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
+            Console.WriteLine(
+            "{0,-6} | {1,-30} | {2,-15} | {3,-20} | {4,-20} | {5,-20}",
+            r.id, r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
         }
         if (quantidadeRevistas == 0)
         {
@@ -352,7 +333,7 @@ public class TelaEmprestimo
         }
     }
 
-    public void VisualizarAmigos(bool exibirCabecalho, bool emprestimoComId)
+    public void VisualizarAmigos(bool exibirCabecalho)
     {
         int quantidadeAmigos = 0;
 
@@ -362,14 +343,11 @@ public class TelaEmprestimo
         Console.WriteLine("Visualizando Amigos...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (emprestimoComId)
-            Console.WriteLine(
-                "{0, -6} | {1, -20} | {2, -20} | {3, -20}",
-                "Id", "Nome", "Responsável", "Telefone");
-        else
-            Console.WriteLine(
-                "{0, -20} | {1, -20} | {2, -20}",
-                "Nome", "Responsável", "Telefone");
+        Console.WriteLine(
+        "{0,-6} | {1,-20} | {2,-20} | {3,-20}",
+        "Id", "Nome", "Responsável", "Telefone");
+
+        Console.WriteLine("--------------------------------------------------------------------------------");
 
         Amigo[] amigosCadastrados = RepositorioAmigos.SelecionarAmigos();
 
@@ -383,19 +361,14 @@ public class TelaEmprestimo
             quantidadeAmigos++;
             RepositorioAmigos.ListaSemNada = false;
 
-            if (emprestimoComId)
-                Console.WriteLine(
-                    "{0, -6} | {1, -20} | {2, -20} | {3, -20}",
-                    a.Id, a.Nome, a.Responsavel, a.Telefone);
-            else
-                Console.WriteLine(
-                    "{0, -20} | {1, -20} | {2, -20}",
-                    a.Nome, a.Responsavel, a.Telefone);
+            Console.WriteLine(
+            "{0,-6} | {1,-20} | {2,-20} | {3,-20}",
+            a.Id, a.Nome, a.Responsavel, a.Telefone);
         }
 
         if (quantidadeAmigos == 0)
         {
-            Console.WriteLine("\nNenhum amigo registrado!");
+            Console.WriteLine("\nNenhum amigo registrado");
             RepositorioAmigos.ListaSemNada = true;
         }
     }
@@ -410,7 +383,7 @@ public class TelaEmprestimo
         Console.WriteLine("Devolução Empréstimo...");
         Console.WriteLine("--------------------------------------------");
 
-        BuscarListaCadastrados(false, true);
+        BuscarListaEmprestimo(true);
 
         if (RepositorioEmprestimo.ListaSemNada)
             return;

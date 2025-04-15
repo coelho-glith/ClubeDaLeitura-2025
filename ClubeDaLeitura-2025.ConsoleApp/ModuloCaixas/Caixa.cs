@@ -6,11 +6,11 @@ public class Caixa
 {
     public int id = 0;
     public string Etiqueta;
-    public int Cor;
+    public string Cor;
     public int DiasEmprestimo;
     public Revista[] revistas = new Revista[40];
 
-    public Caixa (string etiqueta, int cor, int diasEmprestimo)
+    public Caixa(string etiqueta, string cor, int diasEmprestimo)
     {
         Etiqueta = etiqueta;
         Cor = cor;
@@ -34,12 +34,7 @@ public class Caixa
 
         if (string.IsNullOrWhiteSpace(Cor.ToString()))
             erros += "O campo <Cor> é obrigatório.\n";
-        else
-        {
-            int[] enumConsoleColor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-            if (!enumConsoleColor.Contains(Cor))
-                erros += "O campo <Cor> precisa ser uma das cores da tabela, Cuidado.\n";
-        }
+       
 
         if (string.IsNullOrEmpty(DiasEmprestimo.ToString()))
             erros += "O campo <Dias de Emprestimo> é obrigatório\n";

@@ -18,9 +18,9 @@ public class TelaRevista
         ExibirCabecalho();
 
         Console.WriteLine("1 - Inserir Revista");
-        Console.WriteLine("2 - Visualizar Lista de Revistas");
-        Console.WriteLine("3 - Editar Revista");
-        Console.WriteLine("4 - Excluir Revista");
+        Console.WriteLine("2 - Editar Revista");
+        Console.WriteLine("3 - Excluir Revista");
+        Console.WriteLine("4 - Visualizar Lista de Revistas");
         Console.WriteLine("S - Voltar");
 
         Console.Write("\nOpção: ");
@@ -66,7 +66,7 @@ public class TelaRevista
         Console.WriteLine("\nRevista Inserida com sucesso");
     }
 
-    public void VisualizarRevistas(bool exibirCabecalho, bool revistaComId)
+    public void VisualizarRevistas(bool exibirCabecalho)
     {
         if (exibirCabecalho)
             ExibirCabecalho();
@@ -74,14 +74,10 @@ public class TelaRevista
         Console.WriteLine("Visualizando Revistas...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (revistaComId)
-            Console.WriteLine(
-                "{0, -6} | {1, -30} | {2, -15} | {3, -20} | {4, -20} | {5, -20}",
-                "Id", "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
-        else
-            Console.WriteLine(
-                "{0, -30} | {1, -15} | {2, -20} | {3, -20} | {4, -20}",
-                "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
+
+        Console.WriteLine(
+        "{0,-6} | {1,-30} | {2,-20} | {3,-25} | {4,-25} | {5,-15}",
+        "Id", "Título", "N° de Edição", "Ano de Publicação", "Caixa", "Status");
 
         Revista[] revistasCadastradas = RepositorioRevista.BuscarListaRevistas();
 
@@ -97,23 +93,17 @@ public class TelaRevista
             quantidadeRevistas++;
             RepositorioRevista.ListaSemNada = false;
 
-            if (revistaComId)
-                Console.WriteLine(
-                    "{0, -7} | {1, -30} | {2, -17} | {3, -24} | {4, -24} | {5, -24}",
-                    r.id, r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
-            else
-                Console.WriteLine(
-                    "{0, -30} | {1, -17} | {2, -24} | {3, -24} | {4, -24}",
-                    r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
+            Console.WriteLine(
+            "{0,-6} | {1,-30} | {2,-20} | {3,-25} | {4,-25} | {5,-15}",
+            r.id, r.Nome, r.NumeroEdicao, r.DataPublicacao, r.Caixa.Etiqueta, r.StatusEmprestimo);
         }
 
         if (quantidadeRevistas == 0)
         {
-            Console.WriteLine("\nNenhuma revista Cadastrada!");
+            Console.WriteLine("\nNenhuma revista Cadastrada");
             RepositorioRevista.ListaSemNada = true;
         }
     }
-
 
     public void EditarRevista()
     {
@@ -122,7 +112,7 @@ public class TelaRevista
         Console.WriteLine("Editando Revista...");
         Console.WriteLine("--------------------------------------------");
 
-        VisualizarRevistas(false, true);
+        VisualizarRevistas(false);
 
         if (RepositorioRevista.ListaSemNada)
             return;
@@ -191,7 +181,7 @@ public class TelaRevista
         Console.WriteLine("Excluindo Revista...");
         Console.WriteLine("--------------------------------------------");
 
-        VisualizarRevistas(false, true);
+        VisualizarRevistas(false);
 
         if (RepositorioRevista.ListaSemNada)
             return;
@@ -237,7 +227,7 @@ public class TelaRevista
         Console.WriteLine("\nRevista excluída com sucesso!");
     }
 
-    public void VisualizarCaixas(bool exibirCabecalho, bool caixaComId)
+    public void VisualizarCaixas(bool exibirCabecalho)
     {
         if (exibirCabecalho)
             ExibirCabecalho();
@@ -245,16 +235,13 @@ public class TelaRevista
         Console.WriteLine("Visualizando Caixas...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (caixaComId)
-            Console.WriteLine(
-                "{0, -7} | {1, -22} | {2, -23}",
-                "Id", "Etiqueta", "Dias de Empréstimo");
-        else
-            Console.WriteLine(
-                "{0, -22} | {1, -23}",
-                "Etiqueta", "Dias de Empréstimo");
+        Console.WriteLine(
+        "{0, -7} | {1, -22} | {2, -23}",
+        "Id", "Etiqueta", "Dias de Empréstimo");
 
-        Caixa[] caixasRegistradas = RepositorioCaixa.BuscarListaRegistrados();
+        Console.WriteLine("-------------------------------------------------------------");
+
+        Caixa[] caixasRegistradas = RepositorioCaixa.BuscarListaCaixas();
 
         int quantidadeCaixas = 0;
 
@@ -268,19 +255,14 @@ public class TelaRevista
             quantidadeCaixas++;
             RepositorioCaixa.ListaSemNada = false;
 
-            if (caixaComId)
-                Console.WriteLine(
-                    "{0, -7} | {1, -22} | {2, -23}",
-                    c.id, c.Etiqueta, c.DiasEmprestimo);
-            else
-                Console.WriteLine(
-                    "{0, -22} | {1, -23}",
-                    c.Etiqueta, c.DiasEmprestimo);
+            Console.WriteLine(
+            "{0, -7} | {1, -22} | {2, -23}",
+            c.id, c.Etiqueta, c.DiasEmprestimo);
         }
 
         if (quantidadeCaixas == 0)
         {
-            Console.WriteLine("\nNenhuma caixa registrada!");
+            Console.WriteLine("\nNenhuma caixa registrada");
             RepositorioCaixa.ListaSemNada = true;
         }
     }
@@ -309,7 +291,7 @@ public class TelaRevista
         Console.Write("Digite o Ano de Publicação da Revista: ");
         string dataPublicacao = Console.ReadLine()!;
 
-        VisualizarCaixas(true, true);
+        VisualizarCaixas(true);
 
         if (RepositorioCaixa.ListaSemNada)
             return null!;
@@ -325,7 +307,7 @@ public class TelaRevista
 
             if (!idValido)
             {
-                Console.WriteLine("\nO ID selecionado é inválido!");
+                Console.WriteLine("\nO ID selecionado é inválido");
                 return null!;
             }
         } while (!idValido);

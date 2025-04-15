@@ -13,10 +13,10 @@ public class TelaCaixa
     {
         ExibirCabecalho();
 
-        Console.WriteLine("1 - Inserir Revista");
-        Console.WriteLine("2 - Visualizar Lista de Revistas");
-        Console.WriteLine("3 - Excluir Revista");
-        Console.WriteLine("4 - Editar Revista");
+        Console.WriteLine("1 - Inserir Caixa");
+        Console.WriteLine("2 - Editar Caixa");
+        Console.WriteLine("3 - Excluir Caixa");
+        Console.WriteLine("4 - Visualizar Lista de Caixas ");
         Console.WriteLine("S - Voltar");
 
         Console.Write("\nOpção: ");
@@ -46,8 +46,8 @@ public class TelaCaixa
 
         if (RepositorioCaixa.VerificarEtiquetas(novaCaixa))
         {
-            Console.WriteLine("\nJá existe uma caixa com essa etiqueta!");
-            Console.Write("\nPressione qualquer tecla para tentar novamente!");
+            Console.WriteLine("\nJá existe uma caixa com essa etiqueta");
+            Console.Write("\nPressione qualquer tecla para tentar novamente");
             Console.ReadKey();
             InserirCaixa();
             return;
@@ -55,7 +55,7 @@ public class TelaCaixa
 
         RepositorioCaixa.InserirCaixa(novaCaixa);
 
-        Console.WriteLine("\nCaixa registrado com sucesso!");
+        Console.WriteLine("\nCaixa registrado com sucesso");
     }
 
     public void EditarCaixa()
@@ -68,7 +68,7 @@ public class TelaCaixa
         Console.WriteLine("Excluindo Caixa...");
         Console.WriteLine("--------------------------------------------");
 
-        VisualizarCaixas(false, true);
+        VisualizarCaixas(false);
 
         if (RepositorioCaixa.ListaSemNada)
             return;
@@ -113,7 +113,7 @@ public class TelaCaixa
         Console.WriteLine("\nCaixa Removida.");
     }
 
-    public void VisualizarCaixas(bool exibirCabecalho, bool caixaComId)
+    public void VisualizarCaixas(bool exibirCabecalho)
     {
         if (exibirCabecalho)
             ExibirCabecalho();
@@ -121,14 +121,10 @@ public class TelaCaixa
         Console.WriteLine("Visualizando Caixas...");
         Console.WriteLine("--------------------------------------------\n");
 
-        if (caixaComId)
-            Console.WriteLine(
-                "{0, -6} | {1, -20} | {2, -20} | {3, -20}",
-                "Id", "Etiqueta", "Dias de Empréstimo", "Revistas na Caixa");
-        else
-            Console.WriteLine(
-                "{0, -20} | {1, -20} | {2, -20}",
-                "Etiqueta", "Dias de Empréstimo", "Revistas na Caixa");
+        Console.WriteLine(
+         "{0, -5} | {1, -30} | {2, -20} | {3, -20} | {4, -20}",
+         "Id", "Etiqueta", "Dias de Empréstimo","Cor", "Revistas na Caixa");
+        ;
 
         Caixa[] caixasRegistradas = RepositorioCaixa.BuscarListaCaixas();
 
@@ -146,19 +142,21 @@ public class TelaCaixa
             quantidadeCaixas++;
             RepositorioCaixa.ListaSemNada = false;
 
-            if (caixaComId)
-                Console.WriteLine(
-                    "{0, -6} | {1, -27} | {2, -27} | {3, -27}",
-                    c.id, c.Etiqueta, c.DiasEmprestimo, quantidadeRevistas);
-            else
-                Console.WriteLine(
-                    "{0, -27} | {1, -27} | {2, -27}",
-                    c.Etiqueta, c.DiasEmprestimo, quantidadeRevistas);
+
+            Console.Write("{0,-5} | {1,-30} | ", c.id, c.Etiqueta);
+
+            ConsoleColor corConsole = ObterCorConsole(c.Cor);
+            Console.ForegroundColor = corConsole;
+            Console.Write("{0,-20}", c.Cor);
+
+            Console.ResetColor();
+            Console.WriteLine(" | {0,-20} | {1,-20}", c.DiasEmprestimo, quantidadeRevistas);
+            Console.WriteLine("--------------------------------------------------------------------------------");
         }
 
         if (quantidadeCaixas == 0)
         {
-            Console.WriteLine("\nNenhuma caixa registrada!");
+            Console.WriteLine("\nNenhuma caixa registrada");
             RepositorioCaixa.ListaSemNada = true;
         }
     }
@@ -171,41 +169,31 @@ public class TelaCaixa
         Console.WriteLine("--------------------------------------------\n");
     }
 
-    public int BuscarCoresPaletas()
+    public string BuscarCoresPaletas(string etiqueta)
     {
         ExibirCabecalho();
 
         Console.WriteLine("Paleta de Cores");
         Console.WriteLine("--------------------------------------------");
 
-        for (int i = 0; i <= 15; i++)
+        string[] coresValidas = { "vermelho", "verde", "azul", "amarelo", "branco", "cinza" };
+
+        string cor;
+
+        Console.WriteLine("\nCores disponíveis: " + string.Join(", ", coresValidas));
+
+        while (true)
         {
-            Console.ForegroundColor = (ConsoleColor)i;
-            Console.WriteLine($"{i} - {(ConsoleColor)i}");
-        }
-        Console.ResetColor();
+            Console.WriteLine($"\nInsira a COR da caixa {etiqueta}: ");
+            cor = Console.ReadLine()!;
 
-        bool idValido;
-        int corPaleta;
-
-        do
-        {
-            Console.WriteLine("\n--------------------------------------------");
-            Console.Write("Selecione uma cor da paleta de cores: ");
-            idValido = int.TryParse(Console.ReadLine(), out corPaleta);
-
-            if (!idValido)
-            {
-                Console.WriteLine("\nOpção inválida.");
-                Console.Write("\nPressione qualquer letra para tentar de novo");
-                Console.ReadKey();
-                BuscarCoresPaletas();
+            if (coresValidas.Contains(cor.ToLower()))
                 break;
-            }
-            break;
-        } while (!idValido);
 
-        return corPaleta;
+            Console.WriteLine("Cor inválida! Tente novamente.");
+        }
+
+        return cor;
     }
 
     public Caixa ObterDadosCaixa()
@@ -213,7 +201,7 @@ public class TelaCaixa
         Console.Write("Digite o Nome da Etiqueta da Caixa: ");
         string etiqueta = Console.ReadLine()!;
 
-        int cor = BuscarCoresPaletas();
+        string cor = BuscarCoresPaletas(etiqueta);
 
         ExibirCabecalho();
 
@@ -238,7 +226,7 @@ public class TelaCaixa
         Console.WriteLine("Excluindo Caixa...");
         Console.WriteLine("--------------------------------------------");
 
-        VisualizarCaixas(false, true);
+        VisualizarCaixas(false);
 
         if (RepositorioCaixa.ListaSemNada)
             return;
@@ -251,8 +239,8 @@ public class TelaCaixa
 
             if (!idValido)
             {
-                Console.WriteLine("\nO ID selecionado é inválido!");
-                Console.Write("\nPressione [Enter] para tentar novamente!");
+                Console.WriteLine("\nO ID selecionado é inválido");
+                Console.Write("\nPressione Qualquer tecla para tentar novamente");
                 Console.ReadKey();
                 ExcluirCaixa();
                 return;
@@ -279,6 +267,20 @@ public class TelaCaixa
         RepositorioCaixa.ExcluirCaixa(caixaEscolhida);
 
         Console.WriteLine("\nCaixa excluída com sucesso");
+    }
+
+    public ConsoleColor ObterCorConsole(string cor)
+    {
+        return cor.ToLower() switch
+        {
+            "branco" => ConsoleColor.White,
+            "amarelo" => ConsoleColor.Yellow,
+            "cinza" => ConsoleColor.Gray,
+            "verde" => ConsoleColor.Green,
+            "vermelho" => ConsoleColor.Red,
+            "azul" => ConsoleColor.Blue,
+            _ => ConsoleColor.White
+        };
     }
 }
 

@@ -2,7 +2,7 @@
 
 public class TelaPrincipal
 {
-    public char ApresentarMenuPrincipal()
+    public string ApresentarMenuPrincipal()
     {
         Console.Clear();
 
@@ -21,11 +21,12 @@ public class TelaPrincipal
         Console.WriteLine();
 
         Console.Write("Escolha uma das opções: ");
-        char opcaoEscolhida = Console.ReadLine()[0];
+        string opcaoEscolhida = Console.ReadLine()!;
 
-        return opcaoEscolhida;
-
-
+        if (opcaoEscolhida == null)
+            return null!;
+        else
+            return opcaoEscolhida.Trim().ToUpper();
 
     }
 }

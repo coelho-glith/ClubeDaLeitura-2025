@@ -23,14 +23,10 @@ public class RepositorioAmigos
         {
             if (amigos[i] == null)
                 continue;
-
-           
                 amigos[i].Nome = amigoEditado.Nome;
                 amigos[i].Responsavel = amigoEditado.Responsavel;
                 amigos[i].Telefone = amigoEditado.Telefone;
-
                 return true;
-            
         }
         return false;
     }
@@ -39,7 +35,10 @@ public class RepositorioAmigos
     {
         for (int i = 0; i < amigos.Length; i++)
         {
-            if (novoAmigo.Nome == amigos[i].Nome && novoAmigo.Telefone == amigos[i].Telefone)
+            if (amigos[i] == null)
+                continue;
+
+            if (novoAmigo.Telefone == amigos[i].Telefone && novoAmigo.Id == 0)
                 return true;
         }
         return false;
