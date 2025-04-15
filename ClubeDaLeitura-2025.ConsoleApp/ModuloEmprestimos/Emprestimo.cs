@@ -12,7 +12,7 @@ public class Emprestimo
     public string Situacao;
 
 
-    public Emprestimo(Amigo amigo, Revista revista, DateTime data, string situacao)
+    public Emprestimo(Amigo amigo, Revista revista, string situacao)
     {
         Amigo = amigo;
         Revista = revista;
@@ -47,7 +47,8 @@ public class Emprestimo
 
     public void RegistrarDevolucao()
     {
-
+        Situacao = "Concluído";
+        Revista.Devolver();
     }
 
 }

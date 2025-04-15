@@ -16,7 +16,6 @@ public class TelaAmigo
         Console.WriteLine("--------------------------------------------");
     }
 
-
     public char ApresentarMenu()
     {
         Console.Clear();
@@ -39,9 +38,6 @@ public class TelaAmigo
 
         return opcaoEscolhida;
     }
-
-
-
 
     public void InserirAmigo()
     {
@@ -111,7 +107,6 @@ public class TelaAmigo
         Notificador.ExibirMensagem("O registro foi editado com sucesso", ConsoleColor.Green);
     }
     
-
     public void RemoverAmigo()
     {
         ExibirCabecalho();
@@ -148,6 +143,8 @@ public class TelaAmigo
 
     public void VisualizarAmigos(bool exibirTitulo, bool amigoComId)
     {
+        int quantidadeDeAmigos = 0;
+
         if (exibirTitulo)
             ExibirCabecalho();
 
@@ -175,8 +172,6 @@ public class TelaAmigo
             );
 
         }
-
-        int quantidadeDeAmigos = 0;
 
         for (int i = 0; i < amigosRegistrados.Length; i++)
         {
@@ -209,6 +204,9 @@ public class TelaAmigo
 
     public void VisualizarEmprestimos(bool exibirCabecalho, bool amigoComId)
     {
+        bool idValido;
+        int idAmigoEncontrado;
+
         ExibirCabecalho();
 
         Console.WriteLine();
@@ -221,14 +219,11 @@ public class TelaAmigo
         if (repositorioAmigos.ListaSemNada)
             return;
 
-        bool idValido;
-        int idAmigoEscolhido;
-
         do
         {
             Console.WriteLine("\n--------------------------------------------");
             Console.Write("Selecione o ID de um Amigo: ");
-            idValido = int.TryParse(Console.ReadLine(), out idAmigoEscolhido);
+            idValido = int.TryParse(Console.ReadLine(), out idAmigoEncontrado);
 
             if (!idValido)
             {

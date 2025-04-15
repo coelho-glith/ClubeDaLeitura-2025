@@ -36,7 +36,7 @@ public class Caixa
             erros += "O campo <Cor> é obrigatório.\n";
         else
         {
-            int[] enumConsoleColor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+            int[] enumConsoleColor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
             if (!enumConsoleColor.Contains(Cor))
                 erros += "O campo <Cor> precisa ser uma das cores da tabela, Cuidado.\n";
         }
@@ -60,7 +60,6 @@ public class Caixa
                 return;
             }
         }
-
     }
 
     public void RemoverRevista(Revista revistaEncontrada)

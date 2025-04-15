@@ -41,7 +41,17 @@ public class Amigo
 
         return erros;
     }
-
+    public void BuscarEmprestimo(Emprestimo novoEmprestimo)
+    {
+        for (int i = 0; i < Emprestimos.Length; i++)
+        {
+            if (Emprestimos[i] == null)
+            {
+                Emprestimos[i] = novoEmprestimo;
+                return;
+            }
+        }
+    }
 
     public Emprestimo[] ObterEmprestimos()
     {
